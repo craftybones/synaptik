@@ -1,0 +1,28 @@
+{
+  "name": "synaptik",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "express": "^4.16.3",
+    "supertest": "^3.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nock": "^9.4.3"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craftybones/synaptik.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/craftybones/synaptik/issues"
+  },
+  "homepage": "https://github.com/craftybones/synaptik#readme"
+}
