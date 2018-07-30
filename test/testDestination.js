@@ -3,16 +3,17 @@ const nock=require("nock");
 const Destination = require("../src/destination.js");
 
 describe("/GET default path",function(){
-  let host , port;
+  let host , port, mockHttp;
+
   beforeEach(()=>{
     host = "somewhere";
     port = 8099;
+    mockHttp=nock(`http://${host}:${port}`);
   });
+
   describe("with out body",function(){
     it("should respond with a 200 ",function(done){
-      let mockHttp=nock(`http://${host}:${port}`)
-        .get("/")
-        .reply(200);
+      mockHttp.get("/").reply(200);
 
       let destination=new Destination(host,port);
       let mckSrcReq = {
@@ -24,10 +25,9 @@ describe("/GET default path",function(){
         done();
       });
     });
+
     it("should respond with a 404 ",function(done) {
-      let mockHttp=nock(`http://${host}:${port}`)
-        .get("/")
-        .reply(404);
+      mockHttp.get("/").reply(404);
 
       let destination=new Destination(host,port);
       let mckSrcReq = {
@@ -41,8 +41,9 @@ describe("/GET default path",function(){
 
     })
   });
+
   describe("with headers",function(){
-    it("should transmit source headers to target headers",function(done){
+    it("should transmit source headers to target headers without modification",function(done){
       let mockHttp=nock(`http://${host}:${port}`,{
         reqheaders:{
           'User-agent':'curl',
