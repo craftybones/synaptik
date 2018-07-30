@@ -20,8 +20,8 @@ describe("/GET default path",function(){
         'headers':{}
       };
 
-      destination.sendTo(mckSrcReq,(targetRes)=>{
-        assert.equal(200,targetRes.statusCode);
+      destination.sendTo(mckSrcReq,(statusCode)=>{
+        assert.equal(200,statusCode);
         done();
       });
     });
@@ -34,8 +34,8 @@ describe("/GET default path",function(){
         'headers':{}
       };
 
-      destination.sendTo(mckSrcReq,(targetRes)=>{
-        assert.equal(404,targetRes.statusCode);
+      destination.sendTo(mckSrcReq,(statusCode)=>{
+        assert.equal(404,statusCode);
         done();
       });
 
@@ -61,10 +61,26 @@ describe("/GET default path",function(){
         }
       };
 
-      destination.sendTo(mckSrcReq,(targetRes)=>{
-        assert.equal(200,targetRes.statusCode);
+      destination.sendTo(mckSrcReq,(statusCode)=>{
+        assert.equal(200,statusCode);
         done();
       });
+    });
+  });
+
+  describe("with body",function(){
+    it("should return the body as returned by the destination",function(done){
+      mockHttp.get("/").reply(200,"ok");
+      let destination=new Destination(host,port);
+      let mckSrcReq = {
+        'headers':{}
+      };
+
+      destination.sendTo(mckSrcReq,(statusCode,body)=>{
+        assert.equal(200,statusCode);
+        assert.equal("ok",body);
+        done();
+      })
     });
   });
 });

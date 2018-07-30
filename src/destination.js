@@ -10,7 +10,11 @@ class Destination {
     headers.host = this.host;
     let options={host:headers.host,path:"/",headers:headers,port:this.port};
     let targetReq=http.request(options,(targetRes)=>{
-      cb(targetRes);
+      let rawData="";
+      targetRes.on("data",(chunk)=>rawData+=chunk)
+      targetRes.on("end",()=>{
+        cb(targetRes.statusCode,rawData);
+      })
     });
     targetReq.end();
   }
